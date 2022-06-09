@@ -75,22 +75,22 @@ void cg::world::model::load_obj(const std::filesystem::path& model_path)
 				auto c_id = mesh.indices[index_offset + 2];
 
 				float3 a{
-						attrib.vertices[3*a_id.vertex_index],
-						attrib.vertices[3*a_id.vertex_index + 1],
-						attrib.vertices[3*a_id.vertex_index + 2],
+						attrib.vertices[3 * a_id.vertex_index],
+						attrib.vertices[3 * a_id.vertex_index + 1],
+						attrib.vertices[3 * a_id.vertex_index + 2],
 				};
 				float3 b{
-						attrib.vertices[3*b_id.vertex_index],
-						attrib.vertices[3*b_id.vertex_index + 1],
-						attrib.vertices[3*b_id.vertex_index + 2],
+						attrib.vertices[3 * b_id.vertex_index],
+						attrib.vertices[3 * b_id.vertex_index + 1],
+						attrib.vertices[3 * b_id.vertex_index + 2],
 				};
 				float3 c{
-						attrib.vertices[3*c_id.vertex_index],
-						attrib.vertices[3*c_id.vertex_index + 1],
-						attrib.vertices[3*c_id.vertex_index + 2],
+						attrib.vertices[3 * c_id.vertex_index],
+						attrib.vertices[3 * c_id.vertex_index + 1],
+						attrib.vertices[3 * c_id.vertex_index + 2],
 				};
 
-				normal = normalize(cross(b-a, c-a));
+				normal = normalize(cross(b - a, c - a));
 			}
 
 			for (size_t v = 0; v < fv; v++) {
@@ -99,24 +99,26 @@ void cg::world::model::load_obj(const std::filesystem::path& model_path)
 				if (index_map.count(idx_tuple) == 0) {
 					cg::vertex& vertex = vertex_buffer->item(vertex_buffer_id);
 
-					vertex.x = attrib.vertices[3*idx.vertex_index];
-					vertex.y = attrib.vertices[3*idx.vertex_index + 1];
-					vertex.z = attrib.vertices[3*idx.vertex_index + 2];
+					vertex.x = attrib.vertices[3 * idx.vertex_index];
+					vertex.y = attrib.vertices[3 * idx.vertex_index + 1];
+					vertex.z = attrib.vertices[3 * idx.vertex_index + 2];
 
 					if (idx.normal_index < 0) {
 						vertex.nx = normal.x;
 						vertex.ny = normal.y;
 						vertex.nz = normal.z;
-					} else {
-						vertex.nx = attrib.normals[3*idx.normal_index];
-						vertex.ny = attrib.normals[3*idx.normal_index + 1];
-						vertex.nz = attrib.normals[3*idx.normal_index + 2];
+					}
+					else {
+						vertex.nx = attrib.normals[3 * idx.normal_index];
+						vertex.ny = attrib.normals[3 * idx.normal_index + 1];
+						vertex.nz = attrib.normals[3 * idx.normal_index + 2];
 					}
 
 					if (idx.texcoord_index < 0) {
 						vertex.u = 0.f;
 						vertex.v = 0.f;
-					} else {
+					}
+					else {
 						vertex.u = attrib.texcoords[2 * idx.texcoord_index];
 						vertex.v = attrib.texcoords[2 * idx.texcoord_index + 1];
 					}

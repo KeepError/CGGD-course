@@ -6,8 +6,7 @@
 void cg::renderer::rasterization_renderer::init()
 {
 	render_target = std::make_shared<cg::resource<cg::unsigned_color>>(
-			settings->width, settings->height
-			);
+			settings->width, settings->height);
 	rasterizer = std::make_shared<cg::renderer::rasterizer<cg::vertex, cg::unsigned_color>>();
 	rasterizer->set_viewport(settings->width, settings->height);
 	rasterizer->set_render_target(render_target);
@@ -32,7 +31,6 @@ void cg::renderer::rasterization_renderer::init()
 
 	depth_buffer = std::make_shared<cg::resource<float>>(settings->width, settings->height);
 	rasterizer->set_render_target(render_target, depth_buffer);
-	
 }
 void cg::renderer::rasterization_renderer::render()
 {
@@ -41,8 +39,7 @@ void cg::renderer::rasterization_renderer::render()
 	float4x4 matrix = mul(
 			camera->get_projection_matrix(),
 			camera->get_view_matrix(),
-			model->get_world_matrix()
-			);
+			model->get_world_matrix());
 	rasterizer->vertex_shader = [&](float4 vertex, cg::vertex vertex_data) {
 		auto processed = mul(matrix, vertex);
 		return std::make_pair(processed, vertex_data);
@@ -63,7 +60,6 @@ void cg::renderer::rasterization_renderer::render()
 	}
 
 	cg::utils::save_resource(*render_target, settings->result_path);
-
 }
 
 void cg::renderer::rasterization_renderer::destroy() {}
